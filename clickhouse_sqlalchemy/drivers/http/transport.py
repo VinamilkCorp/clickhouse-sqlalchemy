@@ -3,7 +3,7 @@ import re
 from datetime import datetime
 from decimal import Decimal
 from functools import partial
-
+from dateutil.parser import parse as parse_datetime
 from ipaddress import IPv4Address, IPv6Address
 
 import requests
@@ -22,17 +22,15 @@ EXTRACT_SUBTYPE_RE = re.compile(r'^[^\(]+\((.+)\)$')
 
 def date_converter(x):
     if x != DATE_NULL:
-        return datetime.strptime(x, '%Y-%m-%d').date()
+        return parse_datetime(x, yearfirst=True).date()
     return None
 
 
 def datetime_converter(x):
     if x == DATETIME_NULL:
         return None
-    elif len(x) > 19:
-        return datetime.strptime(x, '%Y-%m-%d %H:%M:%S.%f')
     else:
-        return datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
+        return parse_datetime(x, yearfirst=True)
 
 
 def nullable_converter(subtype_str, x):

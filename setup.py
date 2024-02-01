@@ -100,6 +100,7 @@ setup(
         'requests',
         'clickhouse-driver>=0.1.2',
         'asynch>=0.2.2',
+        'python-dateutil>=2.8.2',
     ],
     # Registering `clickhouse` as dialect.
     entry_points={
